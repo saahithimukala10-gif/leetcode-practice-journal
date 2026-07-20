@@ -13,23 +13,27 @@ body{
 
 .journal{
 
-    width:1500px;
-    height:900px;
+    width:min(1500px,95vw);
 
-    margin:40px auto;
+    min-height:92vh;
+
+    margin:4vh auto;
 
     display:grid;
 
-    grid-template-columns:260px 60px 1fr;
+    grid-template-columns:270px 60px 1fr;
 
     background:#5A4638;
 
-    border-radius:20px;
+    border-radius:24px;
 
     overflow:hidden;
 
     box-shadow:
-    0 25px 60px rgba(0,0,0,.35);
+
+        0 40px 80px rgba(0,0,0,.22),
+
+        0 12px 20px rgba(0,0,0,.08);
 
 }
 
@@ -79,13 +83,23 @@ nav button{
 
     text-align:left;
 
-    padding:14px 18px;
+    padding:15px 18px;
 
-    border-radius:10px;
+    border-radius:12px;
 
-    font-size:17px;
+    font-size:16px;
+
+    font-weight:500;
+
+    transition:.2s;
 
     cursor:pointer;
+
+}
+
+nav button:hover{
+
+    background:rgba(255,255,255,.08);
 
 }
 
@@ -132,7 +146,7 @@ nav button.active{
 
 .pages{
 
-    background:#FAF3E8;
+    background:#FBF6EE;
 
     padding:45px;
 
@@ -226,15 +240,27 @@ nav button.active{
 
 .card{
 
-    background:#fff9f1;
+    background:#fffdf8;
 
-    border:2px dashed #c7ae8e;
+    border:2px dashed #cfb18a;
 
-    border-radius:14px;
+    border-radius:20px;
 
     min-height:260px;
 
-    padding:25px;
+    padding:28px;
+
+    box-shadow:
+
+        0 8px 18px rgba(0,0,0,.05);
+
+    transition:.25s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-3px);
 
 }
 

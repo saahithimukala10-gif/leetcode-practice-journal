@@ -1,0 +1,247 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:#8d745e;
+    font-family:'IBM Plex Sans',sans-serif;
+
+}
+
+.journal{
+
+    width:1500px;
+    height:900px;
+
+    margin:40px auto;
+
+    display:grid;
+
+    grid-template-columns:260px 60px 1fr;
+
+    background:#5A4638;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 25px 60px rgba(0,0,0,.35);
+
+}
+
+.cover{
+
+    background:#5A4638;
+
+    color:white;
+
+    padding:45px 28px;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.cover h1{
+
+    font-family:'Fraunces',serif;
+
+    font-size:42px;
+
+    line-height:1.15;
+
+    margin-bottom:45px;
+
+}
+
+nav{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+nav button{
+
+    border:none;
+
+    background:transparent;
+
+    color:#efe4d6;
+
+    text-align:left;
+
+    padding:14px 18px;
+
+    border-radius:10px;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+}
+
+nav button.active{
+
+    background:#697b63;
+
+}
+
+.quote{
+
+    margin-top:auto;
+
+    background:#F7EFE2;
+
+    color:#3d3027;
+
+    padding:22px;
+
+    border-radius:12px;
+
+    border:2px dashed #c8b49a;
+
+}
+
+.quote p{
+
+    font-family:'Fraunces',serif;
+
+    line-height:1.7;
+
+}
+
+.spiral{
+
+    background:
+    radial-gradient(circle,#1e1e1e 9px,transparent 10px);
+
+    background-size:100% 50px;
+
+    background-repeat:repeat-y;
+
+}
+
+.pages{
+
+    background:#FAF3E8;
+
+    padding:45px;
+
+}
+
+.hero{
+
+    display:grid;
+
+    grid-template-columns:220px 1fr;
+
+    gap:35px;
+
+    margin-bottom:35px;
+
+}
+
+.progress-card{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.progress-circle{
+
+    width:170px;
+
+    height:170px;
+
+    border-radius:50%;
+
+    border:10px solid #b58a2a;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:42px;
+
+    font-family:'Fraunces',serif;
+
+    color:#3c2e26;
+
+}
+
+.welcome{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
+
+.welcome h2{
+
+    font-size:44px;
+
+    font-family:'Fraunces',serif;
+
+    color:#46352C;
+
+    margin-bottom:14px;
+
+}
+
+.welcome p{
+
+    font-size:20px;
+
+    color:#6c584c;
+
+}
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:25px;
+
+}
+
+.card{
+
+    background:#fff9f1;
+
+    border:2px dashed #c7ae8e;
+
+    border-radius:14px;
+
+    min-height:260px;
+
+    padding:25px;
+
+}
+
+.card h3{
+
+    font-family:'Fraunces',serif;
+
+    color:#46352c;
+
+}

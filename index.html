@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Practice Journal</title>
 
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+    <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -17,85 +20,513 @@
 
 <div class="journal">
 
-    <aside class="cover">
+    <!-- ========================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================= -->
 
-        <h1>Practice<br>Journal</h1>
+    <aside class="sidebar">
 
-        <nav>
+        <div class="logo">
 
-            <button class="active">Dashboard</button>
-            <button>Chapters</button>
-            <button>Study Log</button>
-            <button>Statistics</button>
-            <button>Settings</button>
+            <h1>Practice</h1>
+            <h2>Journal</h2>
+
+            <p>
+                Your personal roadmap for mastering
+                Data Structures & Algorithms.
+            </p>
+
+        </div>
+
+        <nav class="navigation">
+
+            <button class="nav-btn active" data-page="dashboard">
+                <span>🏠</span>
+                Dashboard
+            </button>
+
+            <button class="nav-btn" data-page="roadmap">
+                <span>📚</span>
+                Roadmap
+            </button>
+
+            <button class="nav-btn" data-page="favorites">
+                <span>⭐</span>
+                Favorites
+            </button>
+
+            <button class="nav-btn" data-page="stats">
+                <span>📊</span>
+                Statistics
+            </button>
 
         </nav>
 
-        <div class="quote">
+        <div class="sidebar-footer">
 
-            <p>"Pattern first,<br>code second."</p>
+            <div class="quote">
+
+                <p>
+                    “Small progress every day beats
+                    perfect plans someday.”
+                </p>
+
+            </div>
 
         </div>
 
     </aside>
 
-    <div class="spiral"></div>
+    <!-- Notebook Holes -->
 
-    <main class="pages">
+    <div class="binding">
 
-        <section class="hero">
+        <div class="holes"></div>
 
-            <div class="progress-card">
+    </div>
+
+    <!-- ========================= -->
+    <!-- MAIN CONTENT -->
+    <!-- ========================= -->
+
+    <main class="content">
+
+        <!-- ========================= -->
+        <!-- DASHBOARD -->
+        <!-- ========================= -->
+
+        <section class="page active" id="dashboard">
+
+            <header class="hero">
+
+                <div>
+
+                    <p class="eyebrow">
+                        LEETCODE PRACTICE
+                    </p>
+
+                    <h1>
+                        Welcome Back 👋
+                    </h1>
+
+                    <p class="subtitle">
+
+                        Keep solving.
+                        Keep learning.
+                        Keep improving.
+
+                    </p>
+
+                </div>
 
                 <div class="progress-circle">
-                    0%
+
+                    <svg viewBox="0 0 120 120">
+
+                        <circle
+                            cx="60"
+                            cy="60"
+                            r="52"
+                            class="bg-circle">
+                        </circle>
+
+                        <circle
+                            cx="60"
+                            cy="60"
+                            r="52"
+                            class="progress-ring">
+                        </circle>
+
+                    </svg>
+
+                    <div class="progress-text">
+
+                        <h2 id="overallProgress">
+                            0%
+                        </h2>
+
+                        <span>
+                            Complete
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+            <section class="stats-grid">
+
+                <div class="card stat-card">
+
+                    <h3>Total Solved</h3>
+
+                    <h2 id="totalSolved">
+                        0
+                    </h2>
+
+                </div>
+
+                <div class="card stat-card">
+
+                    <h3>Easy</h3>
+
+                    <h2 id="easySolved">
+                        0
+                    </h2>
+
+                </div>
+
+                <div class="card stat-card">
+
+                    <h3>Medium</h3>
+
+                    <h2 id="mediumSolved">
+                        0
+                    </h2>
+
+                </div>
+
+                <div class="card stat-card">
+
+                    <h3>Hard</h3>
+
+                    <h2 id="hardSolved">
+                        0
+                    </h2>
+
+                </div>
+
+            </section>
+
+
+
+                        <section class="dashboard-grid">
+
+                <!-- Daily Streak -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h2>🔥 Daily Streak</h2>
+
+                    </div>
+
+                    <div class="streak-box">
+
+                        <h1 id="streakCount">
+                            0
+                        </h1>
+
+                        <p>
+                            consecutive days
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- Difficulty Breakdown -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h2>📈 Difficulty Breakdown</h2>
+
+                    </div>
+
+                    <div class="difficulty-list">
+
+                        <div class="difficulty-item">
+
+                            <span>Easy</span>
+
+                            <div class="difficulty-bar">
+
+                                <div
+                                    id="easyBar"
+                                    class="fill easy">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="difficulty-item">
+
+                            <span>Medium</span>
+
+                            <div class="difficulty-bar">
+
+                                <div
+                                    id="mediumBar"
+                                    class="fill medium">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="difficulty-item">
+
+                            <span>Hard</span>
+
+                            <div class="difficulty-bar">
+
+                                <div
+                                    id="hardBar"
+                                    class="fill hard">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Recent Activity -->
+
+                <div class="card recent-card">
+
+                    <div class="card-header">
+
+                        <h2>📝 Recent Activity</h2>
+
+                    </div>
+
+                    <ul
+                        id="recentActivity"
+                        class="activity-list">
+
+                        <li>
+                            No activity yet.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </section>
+
+        </section>
+
+        <!-- ========================= -->
+        <!-- ROADMAP -->
+        <!-- ========================= -->
+
+        <section
+            class="page"
+            id="roadmap">
+
+            <header class="page-header">
+
+                <div>
+
+                    <h1>
+                        DSA Roadmap
+                    </h1>
+
+                    <p>
+
+                        Track every topic as you
+                        progress through your journey.
+
+                    </p>
+
+                </div>
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search topics or problems...">
+
+                </div>
+
+            </header>
+
+            <div
+                id="roadmapContainer"
+                class="roadmap-container">
+
+                <!-- Generated by JavaScript -->
+
+            </div>
+
+        </section>
+
+
+
+
+                <!-- ========================= -->
+        <!-- FAVORITES -->
+        <!-- ========================= -->
+
+        <section
+            class="page"
+            id="favorites">
+
+            <header class="page-header">
+
+                <div>
+
+                    <h1>
+                        Favorite Problems
+                    </h1>
+
+                    <p>
+
+                        Your bookmarked questions
+                        for quick revision.
+
+                    </p>
+
+                </div>
+
+            </header>
+
+            <div
+                id="favoritesContainer"
+                class="favorites-container">
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        ⭐
+                    </div>
+
+                    <h2>
+                        No favorites yet
+                    </h2>
+
+                    <p>
+
+                        Click the star beside any
+                        problem to add it here.
+
+                    </p>
+
                 </div>
 
             </div>
 
-            <div class="welcome">
+        </section>
 
-                <h2>Welcome back.</h2>
+        <!-- ========================= -->
+        <!-- STATISTICS -->
+        <!-- ========================= -->
 
-                <p>
-                    Every problem you solve is another page written in your journal.
-                </p>
+        <section
+            class="page"
+            id="stats">
 
-            </div>
+            <header class="page-header">
+
+                <div>
+
+                    <h1>
+                        Statistics
+                    </h1>
+
+                    <p>
+
+                        Monitor your overall
+                        learning progress.
+
+                    </p>
+
+                </div>
+
+            </header>
+
+            <section class="stats-overview">
+
+                <div class="card">
+
+                    <h3>Completion</h3>
+
+                    <h1 id="completionPercent">
+                        0%
+                    </h1>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Total Problems</h3>
+
+                    <h1 id="totalProblems">
+                        0
+                    </h1>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Remaining</h3>
+
+                    <h1 id="remainingProblems">
+                        0
+                    </h1>
+
+                </div>
+
+            </section>
+
+            <section class="stats-large-card">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h2>
+                            Progress by Topic
+                        </h2>
+
+                    </div>
+
+                    <div
+                        id="topicProgress"
+                        class="topic-progress">
+
+                    </div>
+
+                </div>
+
+            </section>
 
         </section>
 
-        <section class="grid">
 
-            <div class="card">
 
-                <h3>Chapters</h3>
 
-            </div>
+                <!-- ========================= -->
+        <!-- FOOTER -->
+        <!-- ========================= -->
 
-            <div class="card">
+        <footer class="footer">
 
-                <h3>Due for Revisit</h3>
+            <p>
 
-            </div>
+                Built with ❤️ for mastering
+                Data Structures & Algorithms
 
-            <div class="card">
+            </p>
 
-                <h3>Study Log</h3>
-
-            </div>
-
-            <div class="card">
-
-                <h3>Today's Stats</h3>
-
-            </div>
-
-        </section>
+        </footer>
 
     </main>
 
 </div>
+
+<!-- ========================= -->
+<!-- SCRIPTS -->
+<!-- ========================= -->
 
 <script src="js/roadmap.js"></script>
 <script src="js/app.js"></script>

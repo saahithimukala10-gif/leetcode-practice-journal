@@ -1,7 +1,4 @@
-/* ==========================================================
-   PRACTICE JOURNAL
-   VERSION 2
-========================================================== */
+
 
 :root{
 
@@ -1203,4 +1200,45 @@ body{
 
 
 
+.problem-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
+.open-btn {
+    padding: 7px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    background: var(--cover);
+    color: #fff;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.open-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    background: var(--cover-light);
+}
+
+.open-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+
+.problem input[type="checkbox"] {
+    width: 19px;
+    height: 19px;
+
+    accent-color: var(--cover);
+
+    cursor: pointer;
+}

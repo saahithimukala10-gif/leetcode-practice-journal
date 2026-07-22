@@ -5,6 +5,7 @@ const STORAGE_KEY = "practice-journal";
 /* ==========================================================
    STATE
 ========================================================== */
+const openTopics = new Set();
 
 let state = {
 
@@ -158,7 +159,7 @@ function renderRoadmap() {
 
             </div>
 
-            <div class="problem-list">
+            <div class="problem-list ${openTopics.has(topic.id) ? "open" : ""}">
 
             ${topic.problems.map(problem => `
 
@@ -181,15 +182,38 @@ function renderRoadmap() {
 
                     </div>
 
-                    <button
-                        class="favorite-btn"
-                        data-id="${problem.id}">
+                    <div class="problem-actions">
 
-                        ${state.favorites.includes(problem.id)
-                            ? "⭐"
-                            : "☆"}
+    <button
+        class="favorite-btn"
+        data-id="${problem.id}"
+        title="Favorite">
 
-                    </button>
+        ${state.favorites.includes(problem.id)
+            ? "⭐"
+            : "☆"}
+
+    </button>
+
+    ${
+        problem.url
+            ? `
+                <button
+                    class="open-btn"
+                    onclick="window.open('${problem.url}', '_blank')">
+                    Open ↗
+                </button>
+            `
+            : `
+                <button
+                    class="open-btn"
+                    disabled>
+                    Open
+                </button>
+            `
+    }
+
+</div>
 
                 </div>
 
@@ -207,9 +231,15 @@ function renderRoadmap() {
 
         header.addEventListener("click", () => {
 
-            list.classList.toggle("open");
+    const isOpen = list.classList.toggle("open");
 
-        });
+    if (isOpen) {
+        openTopics.add(topic.id);
+    } else {
+        openTopics.delete(topic.id);
+    }
+
+});
 
         roadmapContainer.appendChild(topicCard);
 

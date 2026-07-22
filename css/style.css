@@ -1242,3 +1242,331 @@ body{
 
     cursor: pointer;
 }
+
+/* ==========================================================
+   AUTH SCREEN
+========================================================== */
+
+.auth-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 100vh;
+    padding: 40px 20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #4a3428 0%,
+            #2f211a 45%,
+            #1c1410 100%
+        );
+
+    color: #ead7bd;
+}
+
+
+/* ==========================================================
+   CLOSED JOURNAL
+========================================================== */
+
+.auth-card {
+    position: relative;
+
+    width: min(620px, 92vw);
+    padding: 70px 65px 55px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #3b281e,
+            #2a1b15 55%,
+            #211510
+        );
+
+    border: 2px solid #604431;
+    border-radius: 18px;
+
+    box-shadow:
+        0 28px 70px rgba(0, 0, 0, 0.55),
+        inset 0 0 35px rgba(0, 0, 0, 0.28),
+        inset 2px 2px 3px rgba(255, 230, 190, 0.06);
+
+    overflow: hidden;
+}
+
+
+/* subtle leather texture */
+
+.auth-card::before {
+    content: "";
+    position: absolute;
+    inset: 9px;
+
+    border: 1px dashed rgba(190, 137, 78, 0.45);
+    border-radius: 12px;
+
+    pointer-events: none;
+}
+
+
+/* journal spine */
+
+.auth-card::after {
+    content: "";
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 25px;
+
+    width: 1px;
+
+    background: rgba(190, 137, 78, 0.25);
+
+    box-shadow:
+        5px 0 10px rgba(0, 0, 0, 0.18);
+}
+
+
+/* ==========================================================
+   BRAND
+========================================================== */
+
+.auth-brand {
+    position: relative;
+    z-index: 1;
+
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.auth-brand h1 {
+    margin: 0;
+
+    color: #ead7bd;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2.4rem, 5vw, 3.7rem);
+    font-weight: 600;
+    letter-spacing: -1px;
+}
+
+.auth-brand p {
+    margin: 14px 0 0;
+
+    color: #b98550;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    letter-spacing: 0.5px;
+}
+
+
+/* ==========================================================
+   FORM
+========================================================== */
+
+#authForm {
+    position: relative;
+    z-index: 1;
+}
+
+.auth-field {
+    margin-bottom: 24px;
+}
+
+.auth-field label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #d8bea0;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1rem;
+}
+
+.auth-field input {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 16px 18px;
+
+    color: #ead7bd;
+    background: rgba(18, 11, 8, 0.48);
+
+    border: 1px solid #765137;
+    border-radius: 9px;
+
+    outline: none;
+
+    font: inherit;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.auth-field input::placeholder {
+    color: #8f7059;
+}
+
+.auth-field input:focus {
+    border-color: #b98550;
+
+    background: rgba(24, 15, 11, 0.65);
+
+    box-shadow:
+        0 0 0 3px rgba(185, 133, 80, 0.12);
+}
+
+
+/* ==========================================================
+   MESSAGE
+========================================================== */
+
+.auth-message {
+    min-height: 20px;
+    margin: 5px 0 15px;
+
+    color: #c79b6a;
+
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+
+/* ==========================================================
+   LOGIN BUTTON
+========================================================== */
+
+.auth-submit {
+    width: 100%;
+
+    padding: 16px;
+
+    color: #f1dfc7;
+    background:
+        linear-gradient(
+            180deg,
+            #5a3827,
+            #472b20
+        );
+
+    border: 1px solid #9b6942;
+    border-radius: 9px;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.15rem;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.05),
+        0 5px 15px rgba(0, 0, 0, 0.18);
+
+    transition:
+        transform 0.15s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.auth-submit:hover {
+    background:
+        linear-gradient(
+            180deg,
+            #68422e,
+            #523225
+        );
+
+    border-color: #bc8757;
+
+    transform: translateY(-1px);
+}
+
+.auth-submit:active {
+    transform: translateY(1px);
+}
+
+
+/* ==========================================================
+   LOGIN / SIGNUP SWITCH
+========================================================== */
+
+.auth-switch {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    margin: 28px 0 0;
+
+    color: #bfa58b;
+
+    font-size: 0.95rem;
+}
+
+#authSwitchBtn {
+    padding: 0;
+
+    color: #c28b55;
+    background: transparent;
+
+    border: none;
+    border-bottom: 1px dashed #8d603e;
+
+    font: inherit;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+}
+
+#authSwitchBtn:hover {
+    color: #e0b27d;
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 600px) {
+
+    .auth-screen {
+        padding: 18px;
+    }
+
+    .auth-card {
+        padding: 55px 30px 40px;
+        border-radius: 14px;
+    }
+
+    .auth-card::after {
+        left: 17px;
+    }
+
+    .auth-brand {
+        margin-bottom: 35px;
+    }
+
+    .auth-brand h1 {
+        font-size: 2.35rem;
+    }
+
+    .auth-switch {
+        flex-wrap: wrap;
+    }
+}

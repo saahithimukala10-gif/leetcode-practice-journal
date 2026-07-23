@@ -36,13 +36,14 @@ const favoritesContainer =
 const searchInput =
     document.getElementById("searchInput");
 
-/* ==========================================================
+
+    /* ==========================================================
    INIT
 ========================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
-    loadState();
+    await loadState();
 
     initNavigation();
 
@@ -94,34 +95,86 @@ function initNavigation(){
 }
 
 /* ==========================================================
-   STORAGE
+   SUPABASE STORAGE
 ========================================================== */
 
-function saveState(){
+async function loadState() {
 
-    localStorage.setItem(
+    const {
+        data: { user },
+        error: userError
+    } = await supabaseClient.auth.getUser();
 
-        STORAGE_KEY,
-
-        JSON.stringify(state)
-
-    );
-
-}
-
-function loadState(){
-
-    const saved =
-        localStorage.getItem(STORAGE_KEY);
-
-    if(saved){
-
-        state = JSON.parse(saved);
-
+    if (userError || !user) {
+        return;
     }
 
+    const { data, error } = await supabaseClient
+        .from("progress")
+        .select("*")
+        .eq("user_id", user.id);
+
+    if (error) {
+        console.error("Could not load progress:", error.message);
+        return;
+    }
+
+    state.solved = {};
+    state.favorites = [];
+
+    data.forEach(row => {
+
+        if (row.solved) {
+            state.solved[row.problem_id] = true;
+        }
+
+        if (row.favorite) {
+            state.favorites.push(row.problem_id);
+        }
+
+    });
 }
 
+
+/* ==========================================================
+   SAVE PROBLEM
+========================================================== */
+
+async function saveProblem(id) {
+
+    const {
+        data: { user },
+        error: userError
+    } = await supabaseClient.auth.getUser();
+
+    if (userError || !user) {
+        return;
+    }
+
+    const solved =
+        Boolean(state.solved[id]);
+
+    const favorite =
+        state.favorites.includes(id);
+
+    const { error } = await supabaseClient
+        .from("progress")
+        .upsert(
+            {
+                user_id: user.id,
+                problem_id: id,
+                solved: solved,
+                favorite: favorite
+            },
+            {
+                onConflict: "user_id,problem_id"
+            }
+        );
+
+    if (error) {
+        console.error("Could not save progress:", error.message);
+    }
+}
 
 
 /* ==========================================================
@@ -280,7 +333,7 @@ function attachCheckboxEvents() {
 
                 }
 
-                saveState();
+                saveProblem(id);
                 
                 updateDashboard();
                 
@@ -318,7 +371,7 @@ function attachFavoriteEvents() {
 
                 }
 
-                saveState();
+                saveProblem(id);
                 
                 renderFavorites();
                 

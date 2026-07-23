@@ -66,7 +66,7 @@ body{
 
     width:min(1500px,96vw);
 
-    min-height:94vh;
+    min-height:90vh;
 
     margin:3vh auto;
 
@@ -208,11 +208,14 @@ body{
 
 }
 
-.sidebar-footer{
+.sidebar-footer {
+    margin-top: auto;
 
-    margin-top:auto;
-
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
 }
+
 
 .quote{
 
@@ -1569,4 +1572,58 @@ body{
     .auth-switch {
         flex-wrap: wrap;
     }
+}
+
+/* ==========================================================
+   SIDEBAR ACCOUNT
+========================================================== */
+
+.sidebar-account {
+    margin: 10px 0 0;
+    padding: 20px 0 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    border-top: 1px solid rgba(235, 215, 190, 0.25);
+}
+
+#userEmail {
+    display: block;
+
+    color: #e2c7a9;
+    font-size: 13px;
+    font-weight: 500;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#logoutBtn {
+    display: block;
+    width: fit-content;
+
+    padding: 6px 0;
+
+    border: none;
+    background: transparent;
+
+    color: #d49a68;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+#logoutBtn:hover {
+    color: #f0c69e;
+    transform: translateX(2px);
 }

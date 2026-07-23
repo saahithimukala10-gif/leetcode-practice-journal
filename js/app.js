@@ -46,6 +46,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     await loadState();
 
     await loadRecentActivity();
+    
+    await updateStreak();
 
     initNavigation();
 
@@ -606,6 +608,7 @@ async function loadRecentActivity() {
         .from("activity")
         .select("*")
         .eq("user_id", user.id)
+        .eq("visible", true)
         .order("created_at", { ascending: false })
         .limit(10);
 
@@ -631,6 +634,111 @@ async function loadRecentActivity() {
 
 }
 
+
+/* ==========================================================
+   DAILY STREAK
+========================================================== */
+
+async function updateStreak() {
+
+    const {
+        data: { user },
+        error: userError
+    } = await supabaseClient.auth.getUser();
+
+    if (userError || !user) {
+        return;
+    }
+
+    const { data, error } = await supabaseClient
+        .from("activity")
+        .select("created_at")
+        .eq("user_id", user.id)
+        .eq("action", "solved")
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        console.error("Could not calculate streak:", error.message);
+        return;
+    }
+
+    if (data.length === 0) {
+        state.streak = 0;
+        renderStreak();
+        return;
+    }
+
+    // Get unique activity dates in the user's local timezone
+    const activityDates = [
+        ...new Set(
+            data.map(item =>
+                new Date(item.created_at).toLocaleDateString("en-CA")
+            )
+        )
+    ];
+
+    const today = new Date();
+
+    const todayString =
+        today.toLocaleDateString("en-CA");
+
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const yesterdayString =
+        yesterday.toLocaleDateString("en-CA");
+
+    // A streak is active if you practiced today or yesterday
+    if (
+        !activityDates.includes(todayString) &&
+        !activityDates.includes(yesterdayString)
+    ) {
+        state.streak = 0;
+        renderStreak();
+        return;
+    }
+
+    let streak = 0;
+
+    const checkDate = new Date(
+        activityDates.includes(todayString)
+            ? today
+            : yesterday
+    );
+
+    while (true) {
+
+        const dateString =
+            checkDate.toLocaleDateString("en-CA");
+
+        if (!activityDates.includes(dateString)) {
+            break;
+        }
+
+        streak++;
+
+        checkDate.setDate(checkDate.getDate() - 1);
+    }
+
+    state.streak = streak;
+
+    renderStreak();
+}
+
+
+/* ==========================================================
+   RENDER STREAK
+========================================================== */
+
+function renderStreak() {
+
+    const streakElement =
+        document.getElementById("streakCount");
+
+    if (!streakElement) return;
+
+    streakElement.textContent = state.streak;
+}
 
 /* ==========================================================
    SAVE ACTIVITY
@@ -663,7 +771,10 @@ async function addRecentActivity(problemId, action) {
     await loadRecentActivity();
 
     renderRecentActivity();
+
+    await updateStreak();
 }
+
 
 async function removeRecentActivity(problemId) {
 
@@ -678,13 +789,16 @@ async function removeRecentActivity(problemId) {
 
     const { error } = await supabaseClient
         .from("activity")
-        .delete()
+        .update({
+            visible: false
+        })
         .eq("user_id", user.id)
         .eq("problem_id", problemId)
-        .eq("action", "solved");
+        .eq("action", "solved")
+        .eq("visible", true);
 
     if (error) {
-        console.error("Could not remove activity:", error.message);
+        console.error("Could not hide activity:", error.message);
         return;
     }
 

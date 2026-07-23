@@ -45,6 +45,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     await loadState();
 
+    await loadRecentActivity();
+
     initNavigation();
 
     renderRoadmap();
@@ -325,11 +327,13 @@ function attachCheckboxEvents() {
 
                     state.solved[id] = true;
 
-                    addRecentActivity(`Solved ${getProblemTitle(id)}`);
+                    addRecentActivity(id, "solved");
 
                 } else {
 
                     delete state.solved[id];
+
+                    removeRecentActivity(id);
 
                 }
 
@@ -582,27 +586,122 @@ function updateDashboard() {
 
 }
 
+
 /* ==========================================================
    RECENT ACTIVITY
 ========================================================== */
 
-function addRecentActivity(text) {
+async function loadRecentActivity() {
 
-    state.recent.unshift({
+    const {
+        data: { user },
+        error: userError
+    } = await supabaseClient.auth.getUser();
 
-        text,
+    if (userError || !user) {
+        return;
+    }
 
-        date: new Date().toLocaleDateString()
+    const { data, error } = await supabaseClient
+        .from("activity")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(10);
+
+    if (error) {
+        console.error("Could not load activity:", error.message);
+        return;
+    }
+
+    state.recent = data.map(row => {
+
+        const problem = getProblem(row.problem_id);
+
+        return {
+            text:
+                row.action === "solved"
+                    ? `Solved ${problem ? problem.title : row.problem_id}`
+                    : `${row.action} ${problem ? problem.title : row.problem_id}`,
+
+            date: new Date(row.created_at).toLocaleDateString()
+        };
 
     });
 
-    state.recent = state.recent.slice(0, 10);
-
 }
+
+
+/* ==========================================================
+   SAVE ACTIVITY
+========================================================== */
+
+async function addRecentActivity(problemId, action) {
+
+    const {
+        data: { user },
+        error: userError
+    } = await supabaseClient.auth.getUser();
+
+    if (userError || !user) {
+        return;
+    }
+
+    const { error } = await supabaseClient
+        .from("activity")
+        .insert({
+            user_id: user.id,
+            problem_id: problemId,
+            action: action
+        });
+
+    if (error) {
+        console.error("Could not save activity:", error.message);
+        return;
+    }
+
+    await loadRecentActivity();
+
+    renderRecentActivity();
+}
+
+async function removeRecentActivity(problemId) {
+
+    const {
+        data: { user },
+        error: userError
+    } = await supabaseClient.auth.getUser();
+
+    if (userError || !user) {
+        return;
+    }
+
+    const { error } = await supabaseClient
+        .from("activity")
+        .delete()
+        .eq("user_id", user.id)
+        .eq("problem_id", problemId)
+        .eq("action", "solved");
+
+    if (error) {
+        console.error("Could not remove activity:", error.message);
+        return;
+    }
+
+    await loadRecentActivity();
+
+    renderRecentActivity();
+}
+
+/* ==========================================================
+   RENDER ACTIVITY
+========================================================== */
 
 function renderRecentActivity() {
 
     const list = document.getElementById("recentActivity");
+
+    if (!list) return;
 
     list.innerHTML = "";
 
@@ -611,7 +710,6 @@ function renderRecentActivity() {
         list.innerHTML = "<li>No activity yet.</li>";
 
         return;
-
     }
 
     state.recent.forEach(item => {

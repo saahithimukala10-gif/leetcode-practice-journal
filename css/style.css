@@ -261,8 +261,10 @@ body{
 
 
 .quote{
+    
+    margin-top:16px;
 
-    padding:20px;
+    padding:18px;
 
     border-radius:16px;
 

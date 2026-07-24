@@ -459,25 +459,76 @@ function attachSearch() {
             .trim();
 
         document
-            .querySelectorAll(".problem")
-            .forEach(problem => {
+            .querySelectorAll(".topic")
+            .forEach(topic => {
 
-                const title = problem
-                    .querySelector(".problem-title")
-                    .textContent
-                    .toLowerCase();
+                const problemList =
+                    topic.querySelector(".problem-list");
 
-                problem.style.display =
-                    title.includes(query)
-                        ? "grid"
-                        : "none";
+                const problems =
+                    topic.querySelectorAll(".problem");
+
+                let hasMatch = false;
+
+                problems.forEach(problem => {
+
+                    const title = problem
+                        .querySelector(".problem-title")
+                        .textContent
+                        .toLowerCase();
+
+                    const matches =
+                        title.includes(query);
+
+                    problem.style.display =
+                        matches ? "grid" : "none";
+
+                    if (matches) {
+                        hasMatch = true;
+                    }
+
+                });
+
+
+                // While searching:
+                // open every topic containing a matching problem
+                if (query) {
+
+                    if (hasMatch) {
+                        problemList.classList.add("open");
+                    } else {
+                        problemList.classList.remove("open");
+                    }
+
+                } else {
+
+                    // Search cleared:
+                    // restore the user's normal open/closed topics
+                    const topicTitle =
+                        topic.querySelector(".topic-title h2")
+                            .textContent;
+
+                    const roadmapTopic =
+                        roadmap.find(t =>
+                            t.title === topicTitle
+                        );
+
+                    if (
+                        roadmapTopic &&
+                        openTopics.has(roadmapTopic.id)
+                    ) {
+                        problemList.classList.add("open");
+                    } else {
+                        problemList.classList.remove("open");
+                    }
+
+                }
 
             });
 
     };
 
 }
-
 /* ==========================================================
    FAVORITES
 ========================================================== */

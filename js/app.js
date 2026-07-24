@@ -463,9 +463,10 @@ function renderFavorites() {
         card.innerHTML = `
 
             <input
-                type="checkbox"
-                disabled
-                ${state.solved[id] ? "checked" : ""}>
+    type="checkbox"
+    class="problem-checkbox"
+    data-id="${id}"
+    ${state.solved[id] ? "checked" : ""}>
 
             <div class="problem-title">
 
@@ -492,6 +493,9 @@ function renderFavorites() {
         favoritesContainer.appendChild(card);
 
     });
+
+        attachCheckboxEvents();
+        attachFavoriteEvents();
 
 }
 

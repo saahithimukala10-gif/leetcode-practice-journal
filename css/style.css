@@ -1119,6 +1119,19 @@ body{
 
 }
 
+[data-theme="dark"] .favorites-container .problem {
+    background: #f3dab8;
+    border: 1px solid #69472f;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+[data-theme="dark"] .favorites-container .problem:hover {
+    background: #cfa879;
+    border-color: #69472f;
+}
 /* ==========================================================
    FOOTER
 ========================================================== */

@@ -36,6 +36,65 @@ const favoritesContainer =
 const searchInput =
     document.getElementById("searchInput");
 
+    /* ==========================================================
+   THEME TOGGLE
+========================================================== */
+
+const themeToggle =
+    document.getElementById("themeToggle");
+
+const themeIcon =
+    document.getElementById("themeIcon");
+
+const themeLabel =
+    document.getElementById("themeLabel");
+
+
+function applyTheme(theme) {
+
+    if (theme === "dark") {
+
+        document.documentElement
+            .setAttribute("data-theme", "dark");
+
+        themeIcon.textContent = "☼";
+        themeLabel.textContent = "Light mode";
+
+    } else {
+
+        document.documentElement
+            .removeAttribute("data-theme");
+
+        themeIcon.textContent = "☾";
+        themeLabel.textContent = "Dark mode";
+
+    }
+
+}
+
+
+const savedTheme =
+    localStorage.getItem("theme") || "light";
+
+applyTheme(savedTheme);
+
+
+themeToggle.addEventListener("click", () => {
+
+    const currentTheme =
+        document.documentElement
+            .getAttribute("data-theme");
+
+    const newTheme =
+        currentTheme === "dark"
+            ? "light"
+            : "dark";
+
+    applyTheme(newTheme);
+
+    localStorage.setItem("theme", newTheme);
+
+});
 
     /* ==========================================================
    INIT

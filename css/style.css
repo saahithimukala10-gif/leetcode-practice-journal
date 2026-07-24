@@ -118,6 +118,19 @@ body{
     --hard: #d96b5f;
 }
 
+/* Dark mode — Recent Activity text */
+
+[data-theme="dark"] .activity-list li {
+    color: #5a4030;
+}
+
+/* Dark mode — Footer text */
+
+[data-theme="dark"] .footer {
+    color: #5a4030;
+}
+
+
 /* ==========================================================
    SIDEBAR
 ========================================================== */
@@ -879,12 +892,16 @@ body{
 
     align-items:center;
 
-    padding:22px 26px;
+    padding:16px 26px;
 
     cursor:pointer;
 
     transition:.25s;
 
+}
+
+.problem-list.open {
+    padding-top: 12px;
 }
 
 .topic-header:hover{

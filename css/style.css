@@ -89,6 +89,36 @@ body{
 }
 
 /* ==========================================================
+   DARK MODE — CARAMEL JOURNAL
+========================================================== */
+
+[data-theme="dark"] {
+
+    --bg: #1b120e;
+
+    /* caramel main journal */
+    --paper: #dfbd8e;
+    --paper-dark: #dfbd8e;
+
+    /* dark chocolate leather */
+    --cover: #342219;
+    --cover-light: #422b20;
+
+    /* dark espresso text */
+    --text: #38291f;
+    --muted: #7b6a5b;
+
+    --gold: #a66b2d;
+
+    --border: #9c714e;
+    --shadow: rgba(0, 0, 0, .18);
+
+    --easy: #6bbf74;
+    --medium: #e7a93d;
+    --hard: #d96b5f;
+}
+
+/* ==========================================================
    SIDEBAR
 ========================================================== */
 

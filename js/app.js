@@ -706,7 +706,6 @@ function updateDashboard() {
 /* ==========================================================
    RECENT ACTIVITY
 ========================================================== */
-
 async function loadRecentActivity() {
 
     const {
@@ -723,31 +722,48 @@ async function loadRecentActivity() {
         .select("*")
         .eq("user_id", user.id)
         .eq("visible", true)
-        .order("created_at", { ascending: false })
-        .limit(10);
+        .order("created_at", { ascending: false });
 
     if (error) {
         console.error("Could not load activity:", error.message);
         return;
     }
 
-    state.recent = data.map(row => {
+    // Keep only the latest activity for each problem
+    const seenProblems = new Set();
 
-        const problem = getProblem(row.problem_id);
+    const latestActivity = data.filter(row => {
 
-        return {
-            text:
-                row.action === "solved"
-                    ? `Solved ${problem ? problem.title : row.problem_id}`
-                    : `${row.action} ${problem ? problem.title : row.problem_id}`,
+        if (seenProblems.has(row.problem_id)) {
+            return false;
+        }
 
-            date: new Date(row.created_at).toLocaleDateString()
-        };
+        seenProblems.add(row.problem_id);
 
+        return true;
     });
 
-}
+    // Show maximum 10 unique problems
+    state.recent = latestActivity
+        .slice(0, 10)
+        .map(row => {
 
+            const problem = getProblem(row.problem_id);
+
+            return {
+                text:
+                    row.action === "solved"
+                        ? `Solved ${problem ? problem.title : row.problem_id}`
+                        : `${row.action} ${problem ? problem.title : row.problem_id}`,
+
+                date: new Date(
+                    row.created_at
+                ).toLocaleDateString()
+            };
+
+        });
+
+}
 
 /* ==========================================================
    DAILY STREAK
